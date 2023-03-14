@@ -1,0 +1,10 @@
+
+.card-product{
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.card-img-top{
+    object-fit: contain;
+    padding: 5%;
+}

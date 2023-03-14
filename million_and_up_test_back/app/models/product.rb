@@ -85,4 +85,20 @@ class Product < ApplicationRecord
         }        
     end
 
+    def self.filter_by_query(query)
+        product_search = "%#{query}%"
+        where("name LIKE ? OR description LIKE ?", product_search, product_search)
+    end
+
+    def self.filter_by_min_price(price)
+        where("price >= ", price)
+    end
+
+    def self.filter_by_max_proce(price)
+        where("price <= ", price)
+    end
+
+    def self.filter_by_category(category)
+        where(category_id: category)
+    end
 end

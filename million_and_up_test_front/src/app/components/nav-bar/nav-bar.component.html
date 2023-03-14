@@ -3,17 +3,25 @@
         <a class="navbar-brand" href="#">
             <h1>Angular Bootstrap</h1>
         </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-collapse collapse justify-content-between">
             
             <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Buscar</button>
+                <input autocomplete="off" class="form-control me-2" id="query" #query type="search" (change)="clearSearch(query)"  placeholder="Search" aria-label="Search">
+                <button #buttonSearch class="btn btn-outline-success" type="button" (click)="searchProductsByQuery(query)"><fa-icon [icon]="faSearch"></fa-icon></button>
             </form>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Carrito</a>
+                    <a class="nav-link active" aria-current="page" href="#">{{cartItems.length}}<fa-icon [icon]="faShoppingCart"></fa-icon></a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+<div *ngIf="categories.length > 0" class="categories-list-nav-bar">
+    
+    <div class="list-categories">
+        <div *ngFor="let category of categories; let i = index"  [ngClass]="{'active': i+1 === categoryId}" class="category-name " (click)="searchByCategory(category.name)">
+            <div>{{category.name}}</div>
+        </div>
+    </div>
+</div>

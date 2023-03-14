@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="card">
+        <div class="row no-gutters">
+            <div class="col-sm-5">
+                <img class="card-img" width="450" height="450" src="{{product.image}}" alt="Suresh Dasari Card">
+            </div>
+            <div class="col-sm-7">
+                <div class="card-body">
+                    <span class="product-category">Categoria: {{product.category_name}}</span><br>
+                    <div>
+                        <h2 class="card-title product-title">{{product.name}}</h2>
+                        <span class="product-rating" style="font-style: italic;">Calificacion: {{product.rating}}</span>
+                    </div>
+                    <p class="card-text">{{product.description}}</p>
+                    <h3 class="card-title">$ {{product.price}} c/u</h3>
+                    <span class="product-rating" *ngIf="product.stock > 0">Stock disponible: {{product.stock}}</span>
+                </div>
+                <div class="card-body" *ngIf="product.stock > 0">
+                    Cantidad:
+                    <div class="input-group product-quantity">
+                        <button type="button" style="flex: 1 1;" class="form-control" (click)="decreaseQuantity(quantity)">-</button>
+                        <input (keyup)="changeQuantity(quantity)" value="1" type="number" class="form-control" id="quantity" #quantity min="1" max="{{product.stock}}">
+                        <button type="button" style="flex: 1 1;" class="form-control" (click)="increaseQuantity(quantity)">+</button>
+                    </div>
+                    <div class="div-price-total">
+                        <span>Precio Total: $ {{totalPrice}}</span>
+                    </div>
+                    <button type="button" (click)="addToCart(quantity)" class="btn btn-primary">Añadir al carrito</button>
+                </div>
+
+                <div class="card-body" *ngIf="product.stock == 0">
+                    <h5>No disponible</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

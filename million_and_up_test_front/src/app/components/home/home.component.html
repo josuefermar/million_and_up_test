@@ -1,1 +1,17 @@
-<p>home works!</p>
+<div class="container">
+    <div  *ngIf="query != ''" class="row">
+        <div class="col-md-12" style="text-align: center;">
+            Resultados para {{query}}
+        </div>
+    </div>
+    <div class="cards-products row">
+        <div *ngFor="let product of products" class="card-product col-md-4">
+            <app-product-card [product]="product"></app-product-card>
+        </div>
+    </div>
+    <div class="row" *ngIf="showSeeMoreButton">
+        <div class="col-md-12" style="text-align: center; margin-bottom: 1%;">
+            <button type="button" class="btn btn-primary" (click) = "seeMore()">Cargar mas...</button>
+        </div>
+    </div>
+</div>

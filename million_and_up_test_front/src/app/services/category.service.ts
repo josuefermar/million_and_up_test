@@ -13,7 +13,19 @@ export class CategoryService {
     private httpClient: HttpClient
   ) { }
 
-  public getCategories(): Observable<Category> {
-    return this.httpClient.post<Category>(GlobalComponent.apiUrl+'/categories', {})
+  public getCategories(): Observable<Category[]> {
+    return this.httpClient.post<Category[]>(GlobalComponent.apiUrl + '/categories', {})
+  }
+
+  public getCategoryByName(name: string): Observable<Category> {
+    return this.httpClient.post<Category>(GlobalComponent.apiUrl + '/category_by_name', {
+      name
+    })
+  }
+
+  public getCategoryById(id: number): Observable<Category> {
+    return this.httpClient.post<Category>(GlobalComponent.apiUrl + '/category_by_id', {
+      id
+    })
   }
 }

@@ -1,1 +1,9 @@
-<p>product-card works!</p>
+<div  class="card" style="width: 18rem;">
+    
+    <img class="card-img-top" width="250" height="250" src={{product.image}} alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">{{product.name}}</h5>
+        <p class="card-text">${{product.price}}</p>
+        <a href="/product/{{product.id_origin}}" class="btn btn-primary">Ver detalle.</a>
+    </div>
+</div>

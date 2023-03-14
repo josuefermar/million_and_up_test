@@ -1,5 +1,3 @@
-import { Time } from "@angular/common";
-
 export interface Product {
     id: number,
     name: string,
@@ -10,7 +8,7 @@ export interface Product {
     image: string,
     id_origin: string,
     category_id: number,
-    created_at: Time,
-    updated_at: Time,
+    created_at: string,
+    updated_at: string,
     category_name?: string
 }
