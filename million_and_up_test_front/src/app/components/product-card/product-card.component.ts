@@ -20,4 +20,8 @@ export class ProductCardComponent {
     created_at: '',
     updated_at: ''
   }
+
+  ngOnInit(){
+    this.product.price = Number(this.product.price)
+  }
 }

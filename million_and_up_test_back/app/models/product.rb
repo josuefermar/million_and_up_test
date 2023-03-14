@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
     belongs_to :category
+    has_many :products_order
     
     require 'uri'
     require 'net/http'
@@ -87,18 +88,31 @@ class Product < ApplicationRecord
 
     def self.filter_by_query(query)
         product_search = "%#{query}%"
-        where("name LIKE ? OR description LIKE ?", product_search, product_search)
+        where("lower(name) LIKE lower(?) OR lower(description) LIKE lower(?)", product_search, product_search)
     end
 
     def self.filter_by_min_price(price)
-        where("price >= ", price)
+        where("price >= ?", price)
     end
 
-    def self.filter_by_max_proce(price)
-        where("price <= ", price)
+    def self.filter_by_max_price(price)
+        where("price <= ?", price)
     end
 
     def self.filter_by_category(category)
         where(category_id: category)
+    end
+
+    def self.order_by(order)
+        case order
+        when 'name_asc'
+            order(name: :asc)
+        when 'name_desc'
+            order(name: :desc)
+        when 'price_asc'
+            order(price: :asc)
+        when 'price_desc'
+            order(price: :desc)
+        end
     end
 end

@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+
+            <div *ngFor="let item of cartItems; let i = index" class="card cart-items">
+                <div class="row no-gutters">
+                    <div class="col-sm-5">
+                        <img class="card-img" width="250" height="250" src="{{item.product.image}}"
+                            alt="Suresh Dasari Card">
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="card-body">
+                            <div>
+                                <h2 class="card-title product-title">{{item.product.name}}</h2>
+                            </div>
+                            <h3 class="card-title">$ {{item.product.price}} c/u</h3>
+                            <span class="product-rating">Stock disponible: {{item.product.stock}}</span>
+                        </div>
+                        <div class="card-body">
+                            Cantidad:
+                            <div class="input-group product-quantity">
+                                <button type="button" style="flex: 1 1;" class="form-control"
+                                    (click)="decreaseQuantity(i, quantity)">-</button>
+                                <input value="1" type="number" class="form-control" #quantity
+                                    (keyup)="validateQuantity(i, quantity)" min="1" max="{{item.product.stock}}"
+                                    value="{{item.quantity}}">
+                                <button type="button" style="flex: 1 1;" class="form-control"
+                                    (click)="increaseQuantity(i, quantity)">+</button>
+                            </div>
+                            <div class="div-price-total">
+                                <span>Precio Total: $ {{item.product.price*item.quantity}}</span>
+                                <div style="color:red; font-style: italic;font-size: 12px;" *ngIf="item.wrongQuantity">
+                                    Cantidad no valida</div>
+                                <div>
+                                    <button type="button" (click)="removeItem(i)" class="btn btn-danger">Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9" *ngIf="cartItems.length == 0">
+            <div class="row no-gutters">
+                <div class="col-sm-12" style="text-align: center;">
+                    <div class="card-body">
+                        <div>
+                            <h2 class="card-title">Aún no has agregado productos</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Subtotal ({{cartItems.length}} productos): ${{total}}</h5>
+                    <div style="color:red; font-style: italic;font-size: 12px;" *ngIf="wrongQuantity || cartItems.length == 0">No se puede
+                        realizar la compra, revisar los productos.</div>
+                    <button type="button" (click)="createOrder()" *ngIf="!wrongQuantity && cartItems.length != 0" class="btn btn-primary"
+                        style="width: 100%">Comprar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

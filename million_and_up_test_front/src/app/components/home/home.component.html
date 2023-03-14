@@ -1,7 +1,45 @@
 <div class="container">
-    <div  *ngIf="query != ''" class="row">
+    <div *ngIf="query != ''" class="row">
         <div class="col-md-12" style="text-align: center;">
             Resultados para {{query}}
+        </div>
+    </div>
+    <div class="div-filters row">
+        <div class="form-group col-md-3">
+            <span>Ordenar por:</span>
+            <select #orderBySelect id="orderBySelect" (change)="orderProduct(orderBySelect)" class="form-select">
+                <option value="name_asc" [selected]="orderBy == 'name_asc'">A-Z</option>
+                <option value="name_desc" [selected]="orderBy == 'name_desc'">Z-A</option>
+                <option value="price_asc" [selected]="orderBy == 'price_asc'">Menor precio</option>
+                <option value="price_desc" [selected]="orderBy == 'price_desc'">Mayor precio</option>
+            </select>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="form-group col-md-9" style="padding-left: 25%;">
+                    Filtrar por precio:
+                    <div class="row">
+                        <div class="col-md-5">
+                            <input type="number" #filterMinPrice id="filterMinPrice" class="form-control"
+                                placeholder="Precio minimo">
+                        </div>
+                        <div class="col-md-1" style="padding-top: 2%;">
+                            a
+                        </div>
+                        <div class="col-md-5">
+                            <input type="number" #filterMaxPrice id="filterMaxPrice" class="form-control"
+                                placeholder="Precio maximo">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-buttons col-md-3">
+                    <button type="button" (click)="filterPrice(filterMinPrice,filterMaxPrice)"
+                        class="btn btn-primary">Filtrar</button>
+                    <button type="button" (click)="clearFilterPrice(filterMinPrice,filterMaxPrice)"
+                        class="btn btn-secondary">Borrar filtro</button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="cards-products row">
@@ -11,7 +49,7 @@
     </div>
     <div class="row" *ngIf="showSeeMoreButton">
         <div class="col-md-12" style="text-align: center; margin-bottom: 1%;">
-            <button type="button" class="btn btn-primary" (click) = "seeMore()">Cargar mas...</button>
+            <button type="button" class="btn btn-primary" (click)="seeMore()">Cargar mas...</button>
         </div>
     </div>
 </div>

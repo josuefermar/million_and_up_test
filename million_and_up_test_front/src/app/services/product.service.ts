@@ -15,8 +15,16 @@ export class ProductService {
   /**
    * getProducts
    */
-  public getProducts(page: number = 1, limit: number = 12, categoryId?: number, query?: string, minPrice?: number, maxPrice?: number): Observable<Product[]> {
+  public getProducts(
+      orderBy: string,
+      page: number = 1, 
+      limit: number = 9, 
+      categoryId?: number, 
+      query?: string, 
+      minPrice?: number, 
+      maxPrice?: number): Observable<Product[]> {
     return this.httpClient.post<Product[]>(GlobalComponent.apiUrl + '/list_products', {
+      orderBy,
       page,
       limit,
       categoryId,

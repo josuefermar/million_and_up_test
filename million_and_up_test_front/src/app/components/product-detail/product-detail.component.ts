@@ -29,6 +29,7 @@ export class ProductDetailComponent {
   }
   totalPrice = 0
   cartItems: CartItem[] = []
+  wrongQuantity: boolean = false
 
   constructor(
     private productService: ProductService,
@@ -46,8 +47,8 @@ export class ProductDetailComponent {
     })
 
     let cart: string = String(localStorage.getItem('cart'))
-    if(!(cart == 'null')) {
-      this.cartItems = JSON.parse(cart)
+    if (!(cart == 'null')) {
+      this.cartItems = JSON.parse(atob(cart))
     }
   }
 
@@ -60,7 +61,7 @@ export class ProductDetailComponent {
     })
   }
 
-  getProductCategory(){
+  getProductCategory() {
     this.categoryService.getCategoryById(this.product.category_id).subscribe(e => {
       this.product.category_name = e.name
     })
@@ -73,46 +74,56 @@ export class ProductDetailComponent {
 
   increaseQuantity(quantity: HTMLInputElement) {
     let value = Number(quantity.value)
-    quantity.value = String(++value <= this.product.stock ? value : this.product.stock);
+    quantity.value = String(++value);
     this.updatePrice(Number(quantity.value))
+    this.checkQuantity(quantity)
   }
 
   decreaseQuantity(quantity: HTMLInputElement) {
     let value = Number(quantity.value)
-    quantity.value = String(--value < 1 ? 1 : value);
+    quantity.value = String(--value);
     this.updatePrice(Number(quantity.value))
+    this.checkQuantity(quantity)
   }
 
-  changeQuantity(quantity: HTMLInputElement) {
-    let value = Number(quantity.value)
-    if (value < 1) {
-      quantity.value = String(1);
-    }
-    if (value > this.product.stock) {
-      quantity.value = String(this.product.stock);
-    }
-    this.updatePrice(Number(quantity.value))
-  }
-
-  addToCart(quantity: HTMLInputElement){
+  addToCart(quantity: HTMLInputElement) {
     let value = Number(quantity.value)
     let item: CartItem = {
-      productId: this.product.id,
+      product: this.product,
       quantity: value,
-      price: this.product.price
     }
 
-    this.cartItems.push(item)
+    item.product.description = item.product.description.replace(/[’&\/\\#,+()$~%.'":*?<>{}]/g, '');
+    item.product.name = item.product.name.replace(/[’&\/\\#,+()$~%.'":*?<>{}]/g, '');
 
-    localStorage.setItem('cart', JSON.stringify(this.cartItems))
+    let pushItem = true
+
+    this.cartItems.forEach((cartItem, index) => {
+      if (cartItem.product.id_origin == this.product.id_origin) {
+        this.cartItems[index] = item
+        pushItem = false
+        return
+      }
+    });
+
+    if (pushItem) {
+      this.cartItems.push(item)
+    }
+    
+    localStorage.setItem('cart', btoa(JSON.stringify(this.cartItems)))
     this.storeService.updateCart.emit(true)
     Swal.fire(
-      'Producto Agregado!',
+      pushItem ? 'Producto Agregado':'Producto Actualizado',
+      '',
       'success'
     )
   }
 
-  updatePrice(quantity: number){
+  updatePrice(quantity: number) {
     this.totalPrice = quantity * this.product.price
+  }
+
+  checkQuantity(quantity: HTMLInputElement) {
+    this.wrongQuantity = Number(quantity.value) <= 0 || Number(quantity.value) > this.product.stock
   }
 }

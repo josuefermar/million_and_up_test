@@ -9,6 +9,7 @@ class ProductController < ApplicationController
     def list_products
         page = params[:page].to_i
         limit = params[:limit].to_i
+        order_by = params[:orderBy]
 
         products = Product.all
 
@@ -27,11 +28,9 @@ class ProductController < ApplicationController
             products = products.filter_by_max_price(params[:maxPrice].to_f)
         end
         
+        products = products.order_by(order_by)
+        
         products = products.paginate(:page => page, :per_page => limit).to_a
-
-        if !params[:total].nil?
-            render text: products.total_entries
-        end
         
         render json: products
     end

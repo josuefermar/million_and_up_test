@@ -1,26 +1,43 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <h1>Angular Bootstrap</h1>
+            <img src="/assets/images/logo.png" alt="image" style="width: 65%;">
         </a>
         <div class="navbar-collapse collapse justify-content-between">
-            
-            <form class="d-flex">
-                <input autocomplete="off" class="form-control me-2" id="query" #query type="search" (change)="clearSearch(query)"  placeholder="Search" aria-label="Search">
-                <button #buttonSearch class="btn btn-outline-success" type="button" (click)="searchProductsByQuery(query)"><fa-icon [icon]="faSearch"></fa-icon></button>
+            <form class="d-flex" style="width: 60%;">
+                <input autocomplete="off" class="form-control me-2" id="querySearch" #querySearch type="search"
+                    (change)="clearSearch(querySearch)" placeholder="Search" aria-label="Search" value="{{query}}">
+                <button class="btn btn-outline-success" type="button"
+                    (click)="searchProductsByQuery(querySearch)"><fa-icon [icon]="faSearch"></fa-icon></button>
+                <button *ngIf="querySearch.value != ''" class="btn btn-outline-danger" style="margin-left: 1%;"
+                    type="button" (click)="clearQuerySearch(querySearch)"><fa-icon [icon]="faX"></fa-icon></button>
             </form>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">{{cartItems.length}}<fa-icon [icon]="faShoppingCart"></fa-icon></a>
+                    <button type="button" class="nav-link active btn" aria-current="page"
+                        (click)="goToCar()">{{cartItems.length}}<fa-icon [icon]="faShoppingCart"></fa-icon></button>
+                </li>
+                <li class="nav-item" *ngIf="user == undefined">
+                    <button type="button" class="nav-link btn" aria-current="page"
+                        (click)="goToLogin()">Iniciar sesion</button>
+                </li>
+                <li class="nav-item" *ngIf="user == undefined">
+                    <button type="button" class="nav-link btn" aria-current="page"
+                        (click)="goToRegister()">Registrarse</button>
+                </li>
+                <li class="nav-item" *ngIf="user != undefined">
+                    <button type="button" class="nav-link btn" aria-current="page"
+                        (click)="closeSesion()">Cerrar sesion</button>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 <div *ngIf="categories.length > 0" class="categories-list-nav-bar">
-    
+
     <div class="list-categories">
-        <div *ngFor="let category of categories; let i = index"  [ngClass]="{'active': i+1 === categoryId}" class="category-name " (click)="searchByCategory(category.name)">
+        <div *ngFor="let category of categories; let i = index" [ngClass]="{'active': i+1 === categoryId}"
+            class="category-name " (click)="searchByCategory(category.name)">
             <div>{{category.name}}</div>
         </div>
     </div>

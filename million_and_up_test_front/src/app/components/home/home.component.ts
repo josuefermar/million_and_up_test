@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/interfaces/product';
 import { CategoryService } from 'src/app/services/category.service';
@@ -16,6 +16,13 @@ export class HomeComponent {
   categoryId = 0
   showSeeMoreButton = true
   query = ''
+  orderBy = 'name_asc'
+  minPrice: number | undefined = undefined
+  maxPrice: number | undefined = undefined
+  filtersSaved = {
+    query: '',
+    orderBy: 'name_asc'
+  }
 
   constructor(
     private productService: ProductService,
@@ -28,6 +35,8 @@ export class HomeComponent {
     this.storeService.productQuery.subscribe(e => {
       this.query = e
       this.page = 1
+      this.filtersSaved.query = e
+      this.saveFilters()
       this.searchProducts()
     })
 
@@ -39,11 +48,13 @@ export class HomeComponent {
       }
       this.searchProducts()
     })
+    this.getSavedFilters()
   }
 
 
   seeMore() {
     this.productService.getProducts(
+      this.orderBy,
       this.page,
       9,
       this.categoryId != 0 ? this.categoryId : undefined,
@@ -64,13 +75,53 @@ export class HomeComponent {
 
   searchProducts() {
     this.productService.getProducts(
+      this.orderBy,
       this.page,
       9,
       this.categoryId != 0 ? this.categoryId : undefined,
-      this.query != '' ? this.query : undefined
+      this.query != '' ? this.query : undefined,
+      this.minPrice != undefined ? this.minPrice: undefined,
+      this.maxPrice != undefined && this.maxPrice != 0 ? this.maxPrice: undefined,
     ).subscribe(e => {
       this.showSeeMoreButton = !(e.length < 9);
       this.products = e
     })
+  }
+
+  filterPrice(minPrice:HTMLInputElement, maxPrice:HTMLInputElement){
+    this.minPrice = Number(minPrice.value)
+    this.maxPrice = Number(maxPrice.value)
+    this.searchProducts()
+  }
+
+  clearFilterPrice(minPrice:HTMLInputElement, maxPrice:HTMLInputElement){
+    minPrice.value = ''
+    maxPrice.value = ''
+    this.minPrice = undefined
+    this.maxPrice = undefined
+    this.searchProducts()
+  }
+
+  orderProduct(orderBy: HTMLSelectElement) {
+    let value = String(orderBy.value)
+    this.orderBy = value
+    this.filtersSaved.orderBy = value
+    this.saveFilters()
+    this.searchProducts()
+  }
+
+  getSavedFilters() {
+    let filters: string = String(localStorage.getItem('filters'))
+    if (filters != 'null') {
+      this.filtersSaved = JSON.parse(filters)
+      this.query = this.filtersSaved.query
+      this.orderBy = this.filtersSaved.orderBy
+    }
+    this.saveFilters()
+    this.searchProducts()
+  }
+
+  saveFilters() {
+    localStorage.setItem('filters', JSON.stringify(this.filtersSaved))
   }
 }
