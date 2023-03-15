@@ -54,7 +54,7 @@ Esta parte fue generada con [Angular CLI](https://github.com/angular/angular-cli
 
 Link de descarga para windows [aqui](https://nodejs.org/en/download/current/).
 
-## Pre ejecución
+## Ejecución
 
 Antes de poner en marcha el servidor debes instalar las dependencias. Estas se hace con el siguiente comando en consola:
 
