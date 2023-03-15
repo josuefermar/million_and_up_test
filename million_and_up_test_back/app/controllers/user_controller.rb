@@ -24,7 +24,7 @@ class UserController < ApplicationController
     end
 
     def get
-        user = User.find_by(id: params[:userId]).first
+        user = User.find_by(id: params[:userId])
 
         render json: user
     end

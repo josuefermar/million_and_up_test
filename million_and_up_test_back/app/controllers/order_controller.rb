@@ -21,6 +21,10 @@ class OrderController < ApplicationController
                     price: item[:price]
                 )
                 product_order.save
+
+                product_select = Product.find_by(id: item[:product_id])
+                new_stock = product_select.stock - item[:quantity].to_i
+                product_select.update(stock: new_stock)
             end
     
             order.update(price: total_price)
@@ -29,7 +33,7 @@ class OrderController < ApplicationController
             } 
         rescue => exception
             render json: {
-                status: "success",
+                status: "error",
                 message: exception.message
             } 
         end

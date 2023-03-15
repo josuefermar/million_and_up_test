@@ -120,8 +120,8 @@ export class CartComponent {
 
   removeItem(index: number) {
     this.cartItems.splice(index, 1)
-    this.storeService.updateCart.emit(true)
     localStorage.setItem('cart', btoa(JSON.stringify(this.cartItems)))
+    this.storeService.updateCart.emit(true)
     this.getCartData()
     this.updatePrice()
   }

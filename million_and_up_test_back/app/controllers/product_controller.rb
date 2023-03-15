@@ -27,7 +27,7 @@ class ProductController < ApplicationController
         if !params[:maxPrice].nil?
             products = products.filter_by_max_price(params[:maxPrice].to_f)
         end
-        
+        products = products.where('stock > 0')
         products = products.order_by(order_by)
         
         products = products.paginate(:page => page, :per_page => limit).to_a
