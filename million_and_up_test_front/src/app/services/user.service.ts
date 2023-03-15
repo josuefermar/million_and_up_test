@@ -9,7 +9,7 @@ import { User } from '../interfaces/user';
 })
 export class UserService {
 
-  userSession = new EventEmitter<User|undefined>()
+  userSession = new EventEmitter<User | undefined>()
 
   constructor(
     private httpClient: HttpClient
@@ -31,10 +31,10 @@ export class UserService {
   }
 
   public createSesion(email: string, password: string): Observable<{
-      status: string,
-      user: User,
-      message?: string
-    }> {
+    status: string,
+    user: User,
+    message?: string
+  }> {
     return this.httpClient.post<{
       status: "create",
       user: User

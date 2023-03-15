@@ -22,7 +22,7 @@ export class UserRegisterComponent {
   }
 
   createUser(name: HTMLInputElement, email: HTMLInputElement, password: HTMLInputElement) {
-    this.userService.createUser(email.value,name.value, password.value).subscribe(e => {
+    this.userService.createUser(email.value, name.value, password.value).subscribe(e => {
       if (e.status == 'error') {
         Swal.fire(
           'Error',

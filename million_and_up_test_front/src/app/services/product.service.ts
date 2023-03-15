@@ -12,17 +12,14 @@ export class ProductService {
     private httpClient: HttpClient
   ) { }
 
-  /**
-   * getProducts
-   */
   public getProducts(
-      orderBy: string,
-      page: number = 1, 
-      limit: number = 9, 
-      categoryId?: number, 
-      query?: string, 
-      minPrice?: number, 
-      maxPrice?: number): Observable<Product[]> {
+    orderBy: string,
+    page: number = 1,
+    limit: number = 9,
+    categoryId?: number,
+    query?: string,
+    minPrice?: number,
+    maxPrice?: number): Observable<Product[]> {
     return this.httpClient.post<Product[]>(GlobalComponent.apiUrl + '/list_products', {
       orderBy,
       page,

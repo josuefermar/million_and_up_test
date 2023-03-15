@@ -21,7 +21,7 @@ export class ProductCardComponent {
     updated_at: ''
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.product.price = Number(this.product.price)
   }
 }

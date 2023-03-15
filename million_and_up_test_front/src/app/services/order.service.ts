@@ -16,7 +16,7 @@ export class OrderService {
   public createOrder(userId: number, items: CartItem[]): Observable<{
     status: string,
     message?: string
-  }>{
+  }> {
     let data = items.map(e => {
       return {
         product_id: e.product.id,
@@ -24,7 +24,7 @@ export class OrderService {
         quantity: e.quantity,
       }
     })
-    
+
     return this.httpClient.post<{
       status: string,
       message: string

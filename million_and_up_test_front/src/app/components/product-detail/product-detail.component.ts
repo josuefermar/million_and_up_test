@@ -109,11 +109,11 @@ export class ProductDetailComponent {
     if (pushItem) {
       this.cartItems.push(item)
     }
-    
+
     localStorage.setItem('cart', btoa(JSON.stringify(this.cartItems)))
     this.storeService.updateCart.emit(true)
     Swal.fire(
-      pushItem ? 'Producto Agregado':'Producto Actualizado',
+      pushItem ? 'Producto Agregado' : 'Producto Actualizado',
       '',
       'success'
     )

@@ -1,15 +1,15 @@
-.container{
+.container {
     margin-top: 2%;
 }
 
-.cart-items{
+.cart-items {
     margin-bottom: 2%;
 }
 
-.card-img{
+.card-img {
     object-fit: contain;
 }
 
-.product-quantity{
+.product-quantity {
     width: 40%;
 }

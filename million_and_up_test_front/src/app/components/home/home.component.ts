@@ -53,6 +53,7 @@ export class HomeComponent {
 
 
   seeMore() {
+    this.page += 1
     this.productService.getProducts(
       this.orderBy,
       this.page,
@@ -80,21 +81,21 @@ export class HomeComponent {
       9,
       this.categoryId != 0 ? this.categoryId : undefined,
       this.query != '' ? this.query : undefined,
-      this.minPrice != undefined ? this.minPrice: undefined,
-      this.maxPrice != undefined && this.maxPrice != 0 ? this.maxPrice: undefined,
+      this.minPrice != undefined ? this.minPrice : undefined,
+      this.maxPrice != undefined && this.maxPrice != 0 ? this.maxPrice : undefined,
     ).subscribe(e => {
       this.showSeeMoreButton = !(e.length < 9);
       this.products = e
     })
   }
 
-  filterPrice(minPrice:HTMLInputElement, maxPrice:HTMLInputElement){
+  filterPrice(minPrice: HTMLInputElement, maxPrice: HTMLInputElement) {
     this.minPrice = Number(minPrice.value)
     this.maxPrice = Number(maxPrice.value)
     this.searchProducts()
   }
 
-  clearFilterPrice(minPrice:HTMLInputElement, maxPrice:HTMLInputElement){
+  clearFilterPrice(minPrice: HTMLInputElement, maxPrice: HTMLInputElement) {
     minPrice.value = ''
     maxPrice.value = ''
     this.minPrice = undefined

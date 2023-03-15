@@ -28,18 +28,18 @@ export class NavBarComponent {
     query: '',
     orderBy: ''
   }
-  user: User|undefined = undefined
-  
+  user: User | undefined = undefined
+
 
   constructor(
     private categoryService: CategoryService,
     private storeService: StoreService,
     private userService: UserService,
     private router: Router,
-  ){}
+  ) { }
 
-  
-  ngOnInit(){
+
+  ngOnInit() {
     this.categoryService.getCategories().subscribe(e => {
       this.categories = e
     })
@@ -74,39 +74,53 @@ export class NavBarComponent {
     this.getUserData()
   }
 
-  searchProductsByQuery(query: HTMLInputElement){
+  searchProductsByQuery(query: HTMLInputElement) {
+    this.filtersSaved.query = query.value
+    this.saveFilters()
+    this.checkUrl()
     this.storeService.productQuery.emit(query.value);
   }
 
-  clearQuerySearch(query: HTMLInputElement){
+  clearQuerySearch(query: HTMLInputElement) {
     query.value = ''
+    this.checkUrl()
     this.storeService.productQuery.emit('');
   }
 
-  searchByCategory(category_name: string){
-    this.router.navigate(['/'+category_name])
+  checkUrl() {
+    if (this.router.url.includes('/product/')
+      || this.router.url.includes('/login')
+      || this.router.url.includes('/register')
+      || this.router.url.includes('/cart')
+    ) {
+      this.router.navigate([''])
+    }
   }
 
-  clearSearch(query: HTMLInputElement){
-    if(query.value == ''){
+  searchByCategory(category_name: string) {
+    this.router.navigate(['/' + category_name])
+  }
+
+  clearSearch(query: HTMLInputElement) {
+    if (query.value == '') {
       this.filtersSaved.query = query.value
       this.saveFilters()
       this.storeService.productQuery.emit(query.value);
     }
   }
 
-  getCartData(){
+  getCartData() {
     let cart: string = String(localStorage.getItem('cart'))
     this.cartItems = []
-    if(cart != 'null') {
+    if (cart != 'null') {
       this.cartItems = JSON.parse(atob(cart))
     }
   }
 
-  getUserData(){
+  getUserData() {
     let user: string = String(localStorage.getItem('session'))
     this.user = undefined
-    if(user != 'null') {
+    if (user != 'null') {
       this.user = JSON.parse(atob(user))
     }
   }
@@ -124,21 +138,21 @@ export class NavBarComponent {
     localStorage.setItem('filters', JSON.stringify(this.filtersSaved))
   }
 
-  goToCar(){
-    if(this.cartItems.length > 0){
+  goToCar() {
+    if (this.cartItems.length > 0) {
       this.router.navigate(['/cart'])
     }
   }
 
-  goToLogin(){
+  goToLogin() {
     this.router.navigate(['/login'])
   }
 
-  goToRegister(){
+  goToRegister() {
     this.router.navigate(['/register'])
   }
 
-  closeSesion(){
+  closeSesion() {
     this.user = undefined
     localStorage.removeItem('session')
     this.userService.userSession.emit(undefined)

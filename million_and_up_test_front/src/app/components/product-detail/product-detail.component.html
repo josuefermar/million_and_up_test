@@ -18,15 +18,20 @@
                 <div class="card-body" *ngIf="product.stock > 0">
                     Cantidad:
                     <div class="input-group product-quantity">
-                        <button type="button" style="flex: 1 1;" class="form-control" (click)="decreaseQuantity(quantity)">-</button>
-                        <input (keyup) = "checkQuantity(quantity)" value="1" type="number" class="form-control" id="quantity" #quantity min="1" max="{{product.stock}}">
-                        <button type="button" style="flex: 1 1;" class="form-control" (click)="increaseQuantity(quantity)">+</button>
+                        <button type="button" style="flex: 1 1;" class="form-control"
+                            (click)="decreaseQuantity(quantity)">-</button>
+                        <input (keyup)="checkQuantity(quantity)" value="1" type="number" class="form-control"
+                            id="quantity" #quantity min="1" max="{{product.stock}}">
+                        <button type="button" style="flex: 1 1;" class="form-control"
+                            (click)="increaseQuantity(quantity)">+</button>
                     </div>
                     <div class="div-price-total">
                         <span>Precio Total: $ {{totalPrice}}</span>
                     </div>
-                    <div style="color:red; font-style: italic;font-size: 12px;" *ngIf="wrongQuantity">Cantidad no valida</div>
-                    <button type="button" (click)="addToCart(quantity)" [disabled]="wrongQuantity" class="btn btn-primary">Añadir al carrito</button>
+                    <div style="color:red; font-style: italic;font-size: 12px;" *ngIf="wrongQuantity">Cantidad no valida
+                    </div>
+                    <button type="button" (click)="addToCart(quantity)" [disabled]="wrongQuantity"
+                        class="btn btn-primary">Añadir al carrito</button>
                 </div>
 
                 <div class="card-body" *ngIf="product.stock == 0">

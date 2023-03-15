@@ -38,11 +38,11 @@ export class CartComponent {
     let cart: string = String(localStorage.getItem('cart'))
     if (cart != 'null') {
       this.cartItems = JSON.parse(atob(cart))
-      
+
       this.cartItems.forEach(item => {
         this.total += item.product.price * item.quantity
       });
-    }else{
+    } else {
       this.wrongQuantity = true
     }
   }
@@ -88,7 +88,7 @@ export class CartComponent {
   }
 
   createOrder() {
-    if(this.user == undefined){
+    if (this.user == undefined) {
       Swal.fire(
         'Opps!',
         'Debes iniciar sesion antes de proceder con la compra',
@@ -96,15 +96,15 @@ export class CartComponent {
       ).then(e => {
         this.router.navigate(['login'])
       })
-    }else{
+    } else {
       this.orderService.createOrder(this.user.id, this.cartItems).subscribe(e => {
-        if(e.status == 'error'){
+        if (e.status == 'error') {
           Swal.fire(
             'Opps!',
             e.message,
             'error'
           )
-        }else{
+        } else {
           localStorage.removeItem('cart')
           this.storeService.updateCart.emit(true)
           this.router.navigate([''])
@@ -118,18 +118,18 @@ export class CartComponent {
     }
   }
 
-  removeItem(index: number){
-    this.cartItems.splice(index,1)
+  removeItem(index: number) {
+    this.cartItems.splice(index, 1)
     this.storeService.updateCart.emit(true)
     localStorage.setItem('cart', btoa(JSON.stringify(this.cartItems)))
     this.getCartData()
     this.updatePrice()
   }
 
-  getUserData(){
+  getUserData() {
     let user: string = String(localStorage.getItem('session'))
     this.user = undefined
-    if(user != 'null') {
+    if (user != 'null') {
       this.user = JSON.parse(atob(user))
     }
   }

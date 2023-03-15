@@ -32,7 +32,8 @@
                                 <div style="color:red; font-style: italic;font-size: 12px;" *ngIf="item.wrongQuantity">
                                     Cantidad no valida</div>
                                 <div>
-                                    <button type="button" (click)="removeItem(i)" class="btn btn-danger">Eliminar</button>
+                                    <button type="button" (click)="removeItem(i)"
+                                        class="btn btn-danger">Eliminar</button>
                                 </div>
                             </div>
                         </div>
@@ -55,10 +56,11 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Subtotal ({{cartItems.length}} productos): ${{total}}</h5>
-                    <div style="color:red; font-style: italic;font-size: 12px;" *ngIf="wrongQuantity || cartItems.length == 0">No se puede
+                    <div style="color:red; font-style: italic;font-size: 12px;"
+                        *ngIf="wrongQuantity || cartItems.length == 0">No se puede
                         realizar la compra, revisar los productos.</div>
-                    <button type="button" (click)="createOrder()" *ngIf="!wrongQuantity && cartItems.length != 0" class="btn btn-primary"
-                        style="width: 100%">Comprar</button>
+                    <button type="button" (click)="createOrder()" *ngIf="!wrongQuantity && cartItems.length != 0"
+                        class="btn btn-primary" style="width: 100%">Comprar</button>
                 </div>
             </div>
         </div>

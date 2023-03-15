@@ -16,7 +16,7 @@ export class UserLoginComponent {
 
   ngOnInit() {
     let user: string = String(localStorage.getItem('session'))
-    if(user != 'null'){
+    if (user != 'null') {
       this.router.navigate([''])
     }
   }

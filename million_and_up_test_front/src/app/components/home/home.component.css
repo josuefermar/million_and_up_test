@@ -1,21 +1,22 @@
-.cards-products{
+.cards-products {
     margin-top: 1%;
     text-align: -webkit-center;
 }
 
-.card-product{
+.card-product {
     margin-bottom: 2%;
 }
-.div-filters{
+
+.div-filters {
     margin-top: 2%;
     margin-bottom: 2%;
 }
 
-.filter-buttons{
+.filter-buttons {
     padding-top: 2%;
     text-align: end;
 }
 
-.filter-buttons button{
+.filter-buttons button {
     margin-right: 1%;
 }
