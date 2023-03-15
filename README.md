@@ -36,7 +36,11 @@ rails db:seed
 ```
 ## Servidor de desarrollo
 
-Para ejecutar el servidor se utiliza el siguiente comando: `rails s`.
+Para ejecutar el servidor se utiliza el siguiente comando:
+
+```
+rails s
+```
 
 Por defecto el link de la aplicación es `http://localhost:3000/`
 
@@ -64,7 +68,11 @@ npm install
 
 ## Servidor de desarrollo
 
-Para ejecutar el servidor se utiliza el siguiente comando: `npm run start:proxy`.
+Para ejecutar el servidor se utiliza el siguiente comando: 
+
+```
+npm run start:proxy
+```
 
 En este caso se ejecuta este comando para poder permitir la conexión entre el back y el front mediante un proxy
 
